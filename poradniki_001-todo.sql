@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 04 Lip 2022, 21:11
+-- Czas generowania: 04 Lip 2022, 21:21
 -- Wersja serwera: 10.4.22-MariaDB
 -- Wersja PHP: 8.0.13
 
@@ -41,7 +41,8 @@ CREATE TABLE `tasks` (
 
 INSERT INTO `tasks` (`taskID`, `taskFinished`, `taskPriority`, `taskValue`, `taskDatetime`) VALUES
 (116, '0', '1', 'Testowe zadanie', '2022-07-04 20:41:44'),
-(117, '0', '0', 'Drugie, mniej ważne zadanie', '2022-07-04 20:58:37');
+(117, '0', '0', 'Drugie, mniej ważne zadanie', '2022-07-04 20:58:37'),
+(118, '1', '0', 'Do skreślenia', '2022-07-04 21:21:27');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -61,7 +62,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT dla tabeli `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `taskID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `taskID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
