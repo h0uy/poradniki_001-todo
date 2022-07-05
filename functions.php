@@ -2,6 +2,8 @@
 
 require('db.php');
 
+//Pobierz wszystkie zadania
+
 function getTodoTasks($db){
 
 	$query = "
@@ -87,8 +89,22 @@ function getTodoTasks($db){
 
 }
 
+//Akcje przycisków
+
 if(isset($_POST["action"]) && $_POST["action"] == "insert"){
 	insertTodoTask($db);
+}else if(isset($_POST["action"]) && $_POST["action"] == "finish"){
+	finishTodoTask($db);
+}else if(isset($_POST["action"]) && $_POST["action"] == "unfinish"){
+	unfinishTodoTask($db);
+}else if(isset($_POST["action"]) && $_POST["action"] == "priority"){
+	priorityTodoTask($db);
+}else if(isset($_POST["action"]) && $_POST["action"] == "unpriority"){
+	unpriorityTodoTask($db);
+}else if(isset($_POST["action"]) && $_POST["action"] == "delete"){
+	deleteTodoTask($db);
+}else if(isset($_POST["action"]) && $_POST["action"] == "delete_all"){
+	deleteAllTodoTask($db);
 }
 
 function insertTodoTask($db){
@@ -118,74 +134,141 @@ function insertTodoTask($db){
 
 }
 
-if(isset($_POST["action"]) && $_POST["action"] == "finish"){
-	finishTodoTask($db);
-}
 
 function finishTodoTask($db){
 
-	$taskID = $_POST['taskID'];
-
 	$query = "
 	UPDATE tasks
-	SET taskFinished = '1'
-	WHERE taskID = '$taskID'
+	SET taskFinished = ?
+	WHERE taskID = ?
 	";
 
-	if (mysqli_query($db, $query)){
-  		echo json_encode(array("statusCode"=>200));
-	}else{
-  		echo json_encode(array("statusCode"=>201));
+	if($stmt = mysqli_prepare($db, $query)){
+	    mysqli_stmt_bind_param($stmt, "ss", $taskFinished, $taskID);
+	    
+	    $taskFinished = "1";
+	    $taskID = $_REQUEST['taskID'];
+	    
+	    if(mysqli_stmt_execute($stmt)){
+	        echo json_encode(array("statusCode"=>200));
+	    } else{
+	        echo json_encode(array("statusCode"=>201));
+	    }
+	} else{
+	    echo json_encode(array("statusCode"=>201));
 	}
+	 
+	mysqli_stmt_close($stmt);
 
-}
-
-if(isset($_POST["action"]) && $_POST["action"] == "unfinish"){
-	unfinishTodoTask($db);
 }
 
 function unfinishTodoTask($db){
 
-	$taskID = $_POST['taskID'];
+	$query = "
+	UPDATE tasks
+	SET taskFinished = ?
+	WHERE taskID = ?
+	";
+
+	if($stmt = mysqli_prepare($db, $query)){
+	    mysqli_stmt_bind_param($stmt, "ss", $taskFinished, $taskID);
+	    
+	    $taskFinished = "0";
+	    $taskID = $_REQUEST['taskID'];
+	    
+	    if(mysqli_stmt_execute($stmt)){
+	        echo json_encode(array("statusCode"=>200));
+	    } else{
+	        echo json_encode(array("statusCode"=>201));
+	    }
+	} else{
+	    echo json_encode(array("statusCode"=>201));
+	}
+	 
+	mysqli_stmt_close($stmt);
+
+}
+
+
+function priorityTodoTask($db){
 
 	$query = "
 	UPDATE tasks
-	SET taskFinished = '0'
-	WHERE taskID = '$taskID'
+	SET taskPriority = ?
+	WHERE taskID = ?
 	";
 
-	if (mysqli_query($db, $query)){
-  		echo json_encode(array("statusCode"=>200));
-	}else{
-  		echo json_encode(array("statusCode"=>201));
+	if($stmt = mysqli_prepare($db, $query)){
+	    mysqli_stmt_bind_param($stmt, "ss", $taskPriority, $taskID);
+	    
+	    $taskPriority = "1";
+	    $taskID = $_REQUEST['taskID'];
+	    
+	    if(mysqli_stmt_execute($stmt)){
+	        echo json_encode(array("statusCode"=>200));
+	    } else{
+	        echo json_encode(array("statusCode"=>201));
+	    }
+	} else{
+	    echo json_encode(array("statusCode"=>201));
 	}
+	 
+	mysqli_stmt_close($stmt);
 
 }
 
-if(isset($_POST["action"]) && $_POST["action"] == "delete"){
-	deleteTodoTask($db);
+function unpriorityTodoTask($db){
+
+	$query = "
+	UPDATE tasks
+	SET taskPriority = ?
+	WHERE taskID = ?
+	";
+
+	if($stmt = mysqli_prepare($db, $query)){
+	    mysqli_stmt_bind_param($stmt, "ss", $taskPriority, $taskID);
+	    
+	    $taskPriority = "0";
+	    $taskID = $_REQUEST['taskID'];
+	    
+	    if(mysqli_stmt_execute($stmt)){
+	        echo json_encode(array("statusCode"=>200));
+	    } else{
+	        echo json_encode(array("statusCode"=>201));
+	    }
+	} else{
+	    echo json_encode(array("statusCode"=>201));
+	}
+	 
+	mysqli_stmt_close($stmt);
+
 }
+
 
 function deleteTodoTask($db){
-
-	$taskID = $_POST['taskID'];
 
 	$query = "
 	DELETE 
 	FROM tasks
-	WHERE taskID = '$taskID'
+	WHERE taskID = ?
 	";
 
-	if (mysqli_query($db, $query)){
-  		echo json_encode(array("statusCode"=>200));
-	}else{
-  		echo json_encode(array("statusCode"=>201));
+	if($stmt = mysqli_prepare($db, $query)){
+	    mysqli_stmt_bind_param($stmt, "s", $taskID);
+	    
+	    $taskID = $_REQUEST['taskID'];
+	    
+	    if(mysqli_stmt_execute($stmt)){
+	        echo json_encode(array("statusCode"=>200));
+	    } else{
+	        echo json_encode(array("statusCode"=>201));
+	    }
+	} else{
+	    echo json_encode(array("statusCode"=>201));
 	}
+	 
+	mysqli_stmt_close($stmt);
 
-}
-
-if(isset($_POST["action"]) && $_POST["action"] == "delete_all"){
-	deleteAllTodoTask($db);
 }
 
 function deleteAllTodoTask($db){
@@ -193,50 +276,6 @@ function deleteAllTodoTask($db){
 	$query = "
 	DELETE
 	FROM tasks
-	";
-
-	if (mysqli_query($db, $query)){
-  		echo json_encode(array("statusCode"=>200));
-	}else{
-  		echo json_encode(array("statusCode"=>201));
-	}
-
-}
-
-if(isset($_POST["action"]) && $_POST["action"] == "priority"){
-	priorityTodoTask($db);
-}
-
-function priorityTodoTask($db){
-
-	$taskID = $_POST['taskID'];
-
-	$query = "
-	UPDATE tasks
-	SET taskPriority = '1'
-	WHERE taskID = '$taskID'
-	";
-
-	if (mysqli_query($db, $query)){
-  		echo json_encode(array("statusCode"=>200));
-	}else{
-  		echo json_encode(array("statusCode"=>201));
-	}
-
-}
-
-if(isset($_POST["action"]) && $_POST["action"] == "unpriority"){
-	unpriorityTodoTask($db);
-}
-
-function unpriorityTodoTask($db){
-
-	$taskID = $_POST['taskID'];
-
-	$query = "
-	UPDATE tasks
-	SET taskPriority = '0'
-	WHERE taskID = '$taskID'
 	";
 
 	if (mysqli_query($db, $query)){
