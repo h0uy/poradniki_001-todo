@@ -40,9 +40,9 @@ CREATE TABLE `tasks` (
 --
 
 INSERT INTO `tasks` (`taskID`, `taskFinished`, `taskPriority`, `taskValue`, `taskDatetime`) VALUES
-(116, '0', '1', 'Testowe zadanie', '2022-07-04 20:41:44'),
-(117, '0', '0', 'Drugie, mniej ważne zadanie', '2022-07-04 20:58:37'),
-(118, '1', '0', 'Do skreślenia', '2022-07-04 21:21:27');
+(1, '0', '1', 'Testowe zadanie', '2022-07-04 20:41:44'),
+(2, '0', '0', 'Drugie, mniej ważne zadanie', '2022-07-04 20:58:37'),
+(3, '1', '0', 'Do skreślenia', '2022-07-04 21:21:27');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -62,7 +62,7 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT dla tabeli `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `taskID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `taskID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
