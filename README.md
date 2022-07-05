@@ -1,9 +1,9 @@
 # Simple Web ToDo App.
 
 Technologies used:
-  • PHP
-  • MySQL
-  • JavaScript
-  • jQuery
-  • AJAX
-  • Bootstrap
+  - PHP
+  - MySQL
+  - JavaScript
+  - jQuery
+  - AJAX
+  - Bootstrap
