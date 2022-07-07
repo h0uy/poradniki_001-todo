@@ -6,43 +6,34 @@ include('functions.php');
 
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Aplikacja TODO</title>
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
 	<style type="text/css">
-		.app-container{
-			border: 1px solid lightgrey;
-			min-height: 700px;
-			max-height: 700px;
+		body{
 			background-color: #F4F8F9;
-			overflow-y: auto;
 		}
 	</style>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
 	<div class="col-lg-8 mx-auto p-3 py-md-5">
 
-		<header class="d-flex align-items-center pb-3 mb-2">
-		    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-		      	<svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-window-sidebar me-2" viewBox="0 0 16 16">
-				  <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-				  <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v2H1V3a1 1 0 0 1 1-1h12zM1 13V6h4v8H2a1 1 0 0 1-1-1zm5 1V6h9v7a1 1 0 0 1-1 1H6z"/>
-				</svg>
-		      	<span class="fs-4">Aplikacja TODO</span>
-		    </a>
-		</header>
+		<main>
 
-		<main class="app-container p-5">
-
-			<div class="container" id="container">
+			<div class="container-fluid" id="container">
 				<div id="todo_header" class="row">
 					<div class="col-md-12">
 						<h1 class="text-center fw-bold">LISTA ZADAŃ</h1>
@@ -53,35 +44,19 @@ include('functions.php');
 					<form id="insert_form" name="insert_form" method="POST">
 						<div class="col-md-12">
 							<div class="alert alert-success alert-dismissible" id="success" style="display:none;">
-							  <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
 							</div>
 							<div class="input-group">
-								<input 
-								type="text" 
-								name="formTaskValue" 
-								id="formTaskValue"
-								class="form-control" 
-								placeholder="Wpisz treść nowego zadania..."
-								autocomplete="off">
+								<input type="text" name="formTaskValue" id="formTaskValue" class="form-control" placeholder="Wpisz treść nowego zadania..." autocomplete="off">
 
-								<button 
-								type="button" 
-								name="formSubmit" 
-								id="formSubmit"
-								class="fw-bold btn btn-primary" 
-								>+</button>
+								<button type="button" name="formSubmit" id="formSubmit" class="fw-bold btn btn-primary">+</button>
 							</div>
 						</div>
 						<div class="col-md-12 mt-2  d-flex justify-content-between align-items-center">
 							<div class="form-check form-switch">
-							  <input 
-							  class="form-check-input" 
-							  type="checkbox" 
-							  role="switch" 
-							  id="formTaskPriority"
-							  value="0">
+								<input class="form-check-input" type="checkbox" role="switch" id="formTaskPriority" value="0">
 
-							  <label class="form-check-label" for="flexSwitchCheckDefault"><i class="bi bi-star"></i> Zadanie priorytetowe</label>
+								<label class="form-check-label" for="flexSwitchCheckDefault"><i class="bi bi-star"></i> Zadanie priorytetowe</label>
 							</div>
 						</div>
 					</form>
@@ -89,19 +64,20 @@ include('functions.php');
 
 				<div id="todo">
 					<div id="todo_list" class="row mt-3">
-					
+
 						<div class="col-md-12">
 							<ul class="list-group list-group-numbered">
-								
-							  	<?php getTodoTasks($db); ?>
+
+								<?php getTodoTasks($db); ?>
 
 							</ul>
 						</div>
 
 						<div class="col-md-12 mt-2 d-flex justify-content-between align-items-center">
 							<p>Łączna liczba wpisów: <?= $taskCount; ?></p>
-							<?php if($taskCount == "0"){}else{ ?>
-							<p><button class="deleteAllBtn btn btn-danger btn-sm" id="deleteAllBtn">Usuń wszystkie zadania</button></p>
+							<?php if ($taskCount == "0") {
+							} else { ?>
+								<p><button class="deleteAllBtn btn btn-danger btn-sm" id="deleteAllBtn">Usuń wszystkie zadania</button></p>
 							<?php } ?>
 						</div>
 
@@ -114,14 +90,10 @@ include('functions.php');
 			<script src="scripts.js" type="text/javascript"></script>
 
 		</main>
-
-		<footer class="pt-2 my-3 text-muted">
-
-	    	Created by <a href="https://www.youtube.com/channel/UCKRcgrckREjUCPi-otgtmig" class="text-decoration-none">h0uy</a> &middot; &copy; 2022
-	    	<div class="float-end">poradniki_001-todo</div>	
-		</footer>
-
+		
 	</div>
 
+
 </body>
+
 </html>
